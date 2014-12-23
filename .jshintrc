@@ -1,0 +1,19 @@
+{
+	"strict": false,
+	"camelcase" : true,
+	"undef": true,
+	"unused": true,
+	"curly": true,
+
+	"browser": true,
+	"devel": true,
+	"sub": true,
+	"eqeqeq": true,
+	"evil": true,
+	"expr": true,
+	"predef": [
+		"require",
+		"module",
+		"exports"
+	]
+}

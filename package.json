@@ -1,0 +1,16 @@
+{
+  "name": "absolute",
+  "version": "0.0.1",
+  "description": "UI components with absolute positioning",
+  "dependencies": {
+    "ksf": "kaesapps/ksf#master"
+  },
+  "devDependencies": {
+    "browserify": "latest",
+    "tape": "latest",
+    "testling": "latest"
+  },
+  "scripts": {
+    "test": "browserify test/*.js | testling"
+  }
+}
