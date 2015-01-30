@@ -79,8 +79,12 @@ module.exports = compose(function(tag) {
 	},
 }, {
 	prop: function(prop, value) {
-		this._domNode[prop] = value;
-		return this;
+		if (arguments.length === 2) {
+			this._domNode[prop] = value;
+			return this;
+		} else {
+			return this._domNode[prop];
+		}
 	},
 	props: function(props) {
 		Object.keys(props).forEach(function(prop) {
@@ -94,5 +98,11 @@ module.exports = compose(function(tag) {
 		Object.keys(style).forEach(function(prop) {
 			this.styleProp(prop, style[prop]);
 		}, this);
+	},
+	on: function(type, cb) {
+		this._domNode.addEventListener(type, cb);
+	},
+	off: function(type, cb) {
+		this._domNode.removeEventListener(type, cb);
 	},
 });

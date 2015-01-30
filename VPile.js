@@ -15,6 +15,18 @@ module.exports = compose(function() {
 	this._horizontalLayouter = new Full('horizontal');
 	this._zLayouter = new ZFlat();
 }, {
+	content: function(content) {
+		this._verticalLayouter.content(Object.keys(content).map(function(key) {
+			return {
+				key: key,
+				cmp: content[key],
+			};
+		}));
+		this._horizontalLayouter.content(content);
+		this._zLayouter.content(content);
+		this._container.content(content);
+		return this;
+	},
 	add: function(key, cmp, beforeKey) {
 		this._verticalLayouter.add(key, cmp, beforeKey);
 		this._horizontalLayouter.add(key, cmp);
@@ -37,21 +49,4 @@ module.exports = compose(function() {
 	zIndex: delegateGetSet('_zLayouter', 'position'),
 	parentNode: delegateGetSet('_container', 'parentNode'),
 	visible: delegateGetSet('_container', 'visible'),
-
-	// est-ce bien utile ?
-/*	content: function(content) {
-			// remove current children
-			var children = this._verticalLayout.children();
-			Object.keys(children).forEach(function(key) {
-				this.remove(key);
-			}, this);
-			// add new children
-			content.forEach(function(cmp, i) {
-				this.add(i+'', cmp, null);
-			}, this);
-			return this;
-		},
-	at: function(key) {
-		return this._container.children()[key].cmp;
-	},
-*/});
+});
