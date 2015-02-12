@@ -4,17 +4,14 @@ var Elmt = require('./Element');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function() {
-	this._content = new Elmt('input');
-	this._content.prop('type', 'number');
+	this._content = new Elmt('textarea');
 }, {
 	value: function(value) {
 		if (arguments.length) {
-			if (value !== undefined) {
-				this._content.prop('valueAsNumber', value);
-			}
+			this._content.prop('value', (typeof value === 'string' ? value : ''));
 			return this;
 		} else {
-			return this._content.prop('valueAsNumber');
+			return this._content.prop('value');
 		}
 	},
 	onInput: function(cb, key) {

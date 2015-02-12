@@ -1,36 +1,35 @@
 var compose = require('ksf/utils/compose');
 var delegateGetSet = require('./utils/delegateGetSet');
 
-var Pile = require('./layout/Pile');
 var Full = require('./layout/Full');
-var ZFlat = require('./layout/ZFlat');
+var ZPileLayout = require('./layout/ZPile');
 var IncrementalContainer = require('./IncrementalContainer');
 
 
-// empile des composants de largeur propre en 'left' mais leur impose le 'height'
+// empile des composants en 'top' mais leur impose le 'width'
 // incrémental
-module.exports = compose(function() {
+module.exports = compose(function ZPile() {
 	this._container = new IncrementalContainer();
 	this._verticalLayouter = new Full('vertical');
-	this._horizontalLayouter = new Pile('horizontal');
-	this._zLayouter = new ZFlat();
+	this._horizontalLayouter = new Full('horizontal');
+	this._zLayouter = new ZPileLayout();
 }, {
 	content: function(content) {
-		this._horizontalLayouter.content(Object.keys(content).map(function(key) {
+		this._verticalLayouter.content(content);
+		this._horizontalLayouter.content(content);
+		this._zLayouter.content(Object.keys(content).map(function(key) {
 			return {
 				key: key,
 				cmp: content[key],
 			};
 		}));
-		this._verticalLayouter.content(content);
-		this._zLayouter.content(content);
 		this._container.content(content);
 		return this;
 	},
 	add: function(key, cmp, beforeKey) {
-		this._verticalLayouter.add(key, cmp, beforeKey);
+		this._verticalLayouter.add(key, cmp);
 		this._horizontalLayouter.add(key, cmp);
-		this._zLayouter.add(key, cmp);
+		this._zLayouter.add(key, cmp, beforeKey);
 		this._container.add(key, cmp);
 		return cmp;
 	},

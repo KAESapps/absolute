@@ -10,8 +10,8 @@ module.exports = compose(function(axis, content, headMarge, tailMarge) {
 	this._size = null;
 	this._position = null;
 	this._content = content;
-	this._headMarge = headMarge;
-	this._tailMarge = tailMarge;
+	this._headMarge = headMarge || 0;
+	this._tailMarge = tailMarge || 0;
 }, {
 	size: function(size) {
 		if (arguments.length) {

@@ -5,7 +5,8 @@ var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function() {
 	this._content = new Elmt('input');
-	this._content.styleProp('type', 'text');
+	this._content.prop('type', 'text');
+	this._content.styleProp('font', 'inherit');
 }, {
 	value: function(value) {
 		if (arguments.length) {
@@ -27,6 +28,10 @@ module.exports = compose(_Destroyable, _ContentDelegate, function() {
 		var cb = this._owned[key];
 		this._unown(key);
 		this._content.off('change', cb);
+		return this;
+	},
+	placeholder: function(placeholder) {
+		this._content.prop('placeholder', placeholder);
 		return this;
 	},
 });

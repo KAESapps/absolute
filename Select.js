@@ -12,7 +12,7 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(options) {
 		optionNode = document.createElement('option');
 		optionNode.value = option[0];
 		optionNode.textContent = option[1];
-		this._content._domNode.appendChild(optionNode);
+		this._content.domNode.appendChild(optionNode);
 	}
 }, {
 	value: function(value) {
