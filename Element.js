@@ -11,6 +11,7 @@ module.exports = compose(function(tag, namespace) {
 	node.style.boxSizing = 'border-box';
 	node.style.display = 'block'; // est-ce nécessaire de le forcer au démarrage ?
 	this._visible = true;
+	node.style['-webkit-transform'] = 'translateZ(0px)';
 }, {
 	left: function(left) {
 		if (arguments.length) {
