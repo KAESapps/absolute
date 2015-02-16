@@ -1,7 +1,7 @@
 var compose = require('ksf/utils/compose');
 var delegateGetSet = require('./utils/delegateGetSet');
 
-var Marge = require('./layout/Marge');
+var Margin = require('./layout/Margin');
 var DomNodeContainer = require('./DomNodeContainer');
 
 
@@ -10,14 +10,18 @@ Impose la largeur à son enfant mais pas la hauteur
 Crée un domNode avec un ascenseur toujours visible
 */
 module.exports = compose(function(content, options) {
+	options = options || {};
+	options.scrollbarDisplay = options.scrollbarDisplay || 'scroll';
+	options.scrollBarSize = options.scrollBarSize === undefined ? 15 : options.scrollBarSize;
+	
 	this._content = content;
 	this._container = new DomNodeContainer(content);
 	content.left(0).top(0).zIndex(0);
 	this._container.style({
 		overflowX: 'hidden',
-		overflowY: options && options.scrollbarDisplay || 'scroll',
+		overflowY: options.scrollbarDisplay,
 	});
-	this._horizontalLayouter = new Marge('horizontal', content, 0, options && options.scrollBarSize || 15);
+	this._horizontalLayouter = new Margin('horizontal', content, 0, options.scrollBarSize);
 }, {
 	width: function(width) {
 		if (arguments.length) {
