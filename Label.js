@@ -49,8 +49,8 @@ module.exports = compose(_ContentDelegate, function() {
 		if (typeof font === 'string') {
 			this._content.styleProp('font', font);
 		} else {
+			font.family && this._content.styleProp('fontFamily', font.family);
 			this._content.style({
-				fontFamily: font.family,
 				fontWeight: font.weight,
 				fontSize: font.size
 			});

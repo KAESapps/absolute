@@ -94,6 +94,12 @@ module.exports = compose(function(axis) {
 
 		this._size = this._size - child.size;
 	},
+	move: function(key, beforeKey) {
+		// TODO: optimize
+		var cmp = this._children[key].cmp;
+		this.remove(key);
+		this.add(key, cmp, beforeKey);
+	},
 	_layoutFrom: function(key) {
 		var positionProp = this._positionProp;
 		var children = this._children;
