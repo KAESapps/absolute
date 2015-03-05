@@ -64,6 +64,7 @@ module.exports = compose(function() {
 
 		if (content) {
 			this._currentPageContainer.content(content);
+			this._currentPageContainer.visible(true);
 			if (this._previousPageContainer.content()) {
 				// animate
 				this._animInfos.startTime = Date.now();
@@ -92,6 +93,7 @@ module.exports = compose(function() {
 		} else {
 			this._animating = false;
 			this._previousPageContainer.content(null);
+			this._previousPageContainer.visible(false);
 		}
 	},
 

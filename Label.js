@@ -23,26 +23,13 @@ module.exports = compose(_ContentDelegate, function() {
 		this._applyVAlign();
 		return this;
 	},
-	top: function(top) {
-		if (arguments.length) {
-			this._top = top;
-			this._applyVAlign();
-			return this;
-		} else {
-			return this._top;
-		}
-	},
 	_applyVAlign: function() {
-		this._content.styleProp('bottom', null);
-		this._content.styleProp('top', null);
 		this._content.styleProp('lineHeight', null);
-		if (this._vAlign === 'top') {
-			this._content.top(this._top);
-		} else if (this._vAlign === 'bottom') {
-			this._content.styleProp('bottom', this._top + this._content.height() + 'px');
+		this._content.styleProp('padding-top', null);
+		if (this._vAlign === 'bottom') {
+			this._content.styleProp('padding-top', 'calc(' + this._content.height() + 'px - 1em)');
 		} else if (this._vAlign === 'middle') {
 			this._content.styleProp('lineHeight', this._content.height() + 'px');
-			this._content.top(this._top);
 		}
 	},
 	height: function(height) {
@@ -54,4 +41,20 @@ module.exports = compose(_ContentDelegate, function() {
 			return this._content.height();
 		}
 	},
+	color: function(color) {
+		this._content.styleProp('color', color);
+		return this;
+	},
+	font: function(font) {
+		if (typeof font === 'string') {
+			this._content.styleProp('font', font);
+		} else {
+			font.family && this._content.styleProp('fontFamily', font.family);
+			this._content.style({
+				fontWeight: font.weight,
+				fontSize: font.size
+			});
+		}
+		return this;
+	}
 });

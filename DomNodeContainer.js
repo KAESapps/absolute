@@ -6,5 +6,5 @@ Permet de placer un composant dans un domNode enfant plutôt que dans le parentN
 */
 module.exports = compose(Elmt.prototype,  function(content) {
 	Elmt.call(this, 'div');
-	content.parentNode(this._domNode);
+	content.parentNode(this.domNode);
 });
