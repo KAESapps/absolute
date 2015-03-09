@@ -15,16 +15,32 @@ module.exports = compose(function() {
 	this._horizontalLayouter = new Full('horizontal');
 	this._zLayouter = new ZFlat();
 }, {
+	// content est soit une liste ordonnées de couples [cmp, key], soit une liste de composants directement (dans ce cas la clé est la position dans la liste), ou 
 	content: function(content) {
-		this._verticalLayouter.content(Object.keys(content).map(function(key) {
-			return {
-				key: key,
-				cmp: content[key],
-			};
+		this._verticalLayouter.content(content.map(function(arg, index) {
+			if (Array.isArray(arg)) {
+				return {
+					cmp: arg[0],
+					key: arg[1],
+				};
+			} else {
+				return {
+					cmp: arg,
+					key: index+'',
+				};
+			}
 		}));
-		this._horizontalLayouter.content(content);
-		this._zLayouter.content(content);
-		this._container.content(content);
+		var cmpsAsDict = content.reduce(function(acc, arg, index) {
+			if (Array.isArray(arg)) {
+				acc[arg[1]] = arg[0];
+			} else {
+				acc[index] = arg;
+			}
+			return acc;
+		}, {});
+		this._horizontalLayouter.content(cmpsAsDict);
+		this._zLayouter.content(cmpsAsDict);
+		this._container.content(cmpsAsDict);
 		return this;
 	},
 	add: function(key, cmp, beforeKey) {

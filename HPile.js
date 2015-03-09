@@ -16,15 +16,30 @@ module.exports = compose(function() {
 	this._zLayouter = new ZFlat();
 }, {
 	content: function(content) {
-		this._horizontalLayouter.content(Object.keys(content).map(function(key) {
-			return {
-				key: key,
-				cmp: content[key],
-			};
+		this._horizontalLayouter.content(content.map(function(arg, index) {
+			if (Array.isArray(arg)) {
+				return {
+					cmp: arg[0],
+					key: arg[1],
+				};
+			} else {
+				return {
+					cmp: arg,
+					key: index+'',
+				};
+			}
 		}));
-		this._verticalLayouter.content(content);
-		this._zLayouter.content(content);
-		this._container.content(content);
+		var cmpsAsDict = content.reduce(function(acc, arg, index) {
+			if (Array.isArray(arg)) {
+				acc[arg[1]] = arg[0];
+			} else {
+				acc[index] = arg;
+			}
+			return acc;
+		}, {});
+		this._verticalLayouter.content(cmpsAsDict);
+		this._zLayouter.content(cmpsAsDict);
+		this._container.content(cmpsAsDict);
 		return this;
 	},
 	add: function(key, cmp, beforeKey) {
