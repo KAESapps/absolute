@@ -52,7 +52,8 @@ module.exports = compose(_ContentDelegate, function() {
 			font.family && this._content.styleProp('fontFamily', font.family);
 			this._content.style({
 				fontWeight: font.weight,
-				fontSize: font.size
+				fontSize: font.size,
+				fontStyle: font.style,
 			});
 		}
 		return this;
