@@ -32,8 +32,8 @@ module.exports = compose(function(axis) {
 		}, this);
 		this._size = offset;
 
-		this._firstChildKey = config[0].key;
-		this._lastChildKey = config[config.length-1].key;
+		this._firstChildKey = config[0] && config[0].key;
+		this._lastChildKey = config[config.length-1] && config[config.length-1].key;
 		this._layoutFrom(this._firstChildKey);
 
 		// this._emit('size', this._size);
