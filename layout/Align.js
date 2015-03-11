@@ -40,7 +40,7 @@ module.exports = compose(function(axis, content, align) {
 			this._contentOffset = 0;
 		}
 		if (this._align === 'middle') {
-			this._contentOffset = (this._size/2) - (this._contentSize/2);
+			this._contentOffset = Math.round((this._size / 2) - (this._contentSize / 2));
 		}
 		if (this._align === 'tail') {
 			this._contentOffset = this._size - this._contentSize;
