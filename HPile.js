@@ -56,6 +56,9 @@ module.exports = compose(function() {
 		this._zLayouter.remove(key);
 		return cmp;
 	},
+	onWidth: function(cb) {
+		return this._horizontalLayouter.onSize(cb);
+	},
 	width: delegateGetSet('_horizontalLayouter', 'size'),
 	height: delegateGetSet('_verticalLayouter', 'size'),
 	depth: delegateGetSet('_zLayouter', 'size'),

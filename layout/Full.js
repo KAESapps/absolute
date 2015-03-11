@@ -23,7 +23,7 @@ module.exports = compose(function(axis) {
 		delete this._children[key];
 	},
 	_applySize: function(key) {
-		if (this._size) {
+		if (this._size !== undefined) {
 			this._children[key][this._sizeProp](this._size);
 		}
 	},

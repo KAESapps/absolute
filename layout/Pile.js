@@ -1,10 +1,11 @@
 var compose = require('ksf/utils/compose');
+var _Evented = require('ksf/base/_Evented');
 
 /**
 Container qui positionne des enfants de taille fixe dans un ordre donné.
 Peut-être utilisé de façon incrémental
 */
-module.exports = compose(function(axis) {
+module.exports = compose(_Evented, function(axis) {
 	this._children = {};
 	this._sizeProp = (axis === 'vertical' ? 'height' : 'width');
 	this._positionProp = (axis === 'vertical' ? 'top' : 'left');
@@ -36,11 +37,11 @@ module.exports = compose(function(axis) {
 		this._lastChildKey = config[config.length-1] && config[config.length-1].key;
 		this._layoutFrom(this._firstChildKey);
 
-		// this._emit('size', this._size);
+		this._emit('size', this._size);
 
 		return this;
 	},
-	add: function(key, cmp, beforeKey) {
+	_add: function(key, cmp, beforeKey) {
 		beforeKey = beforeKey || null;
 		var sizeProp = this._sizeProp;
 
@@ -68,9 +69,12 @@ module.exports = compose(function(axis) {
 		}
 
 		this._size = (this._size || 0) + cmpSize;
-		// this._emit('size', this._size);
 	},
-	remove: function(key) {
+	add: function(key, cmp, beforeKey) {
+		this._add(key, cmp, beforeKey);
+		this._emit('size', this._size);
+	},
+	_remove: function(key) {
 		var child = this._children[key];
 
 		var previousKey = child.previous;
@@ -94,11 +98,16 @@ module.exports = compose(function(axis) {
 
 		this._size = this._size - child.size;
 	},
+
+	remove: function(key) {
+		this._remove(key);
+		this._emit('size', this._size);
+	},
 	move: function(key, beforeKey) {
 		// TODO: optimize
 		var cmp = this._children[key].cmp;
-		this.remove(key);
-		this.add(key, cmp, beforeKey);
+		this._remove(key);
+		this._add(key, cmp, beforeKey);
 	},
 	_layoutFrom: function(key) {
 		var positionProp = this._positionProp;
@@ -126,7 +135,7 @@ module.exports = compose(function(axis) {
 	size: function() {
 		return this._size;
 	},
-	// onSize: function(cb) {
-	// 	return this._on('size', cb);
-	// },
+	onSize: function(cb) {
+		return this._on('size', cb);
+	},
 });
