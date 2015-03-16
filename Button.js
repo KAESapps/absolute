@@ -4,7 +4,7 @@ var Elmt = require('./Element');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function() {
-	this._content = new Elmt('button');
+	this._content = new Elmt('button').styleProp('font', 'inherit');
 	this._content.styleProp('cursor', 'pointer');
 }, {
 	value: function(value) {

@@ -5,7 +5,7 @@ var _ContentDelegate = require('./_ContentDelegate');
 
 // select natif avec une liste d'options non dynamique
 module.exports = compose(_Destroyable, _ContentDelegate, function(options) {
-	this._content = new Elmt('select');
+	this._content = new Elmt('select').styleProp('font', 'inherit');
 	var option, optionNode;
 	for (var i = 0; i < options.length; i++) {
 		option = options[i];

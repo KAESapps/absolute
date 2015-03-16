@@ -4,7 +4,7 @@ var Elmt = require('./Element');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function() {
-	this._content = new Elmt('textarea');
+	this._content = new Elmt('textarea').styleProp('font', 'inherit');
 }, {
 	value: function(value) {
 		if (arguments.length) {

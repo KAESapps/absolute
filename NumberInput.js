@@ -4,7 +4,7 @@ var Elmt = require('./Element');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function(args) {
-	this._content = new Elmt('input');
+	this._content = new Elmt('input').styleProp('font', 'inherit');
 	this._content.prop('type', 'number');
 	this._asYouType = args && args.asYouType;
 }, {
