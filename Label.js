@@ -27,7 +27,10 @@ module.exports = compose(_ContentDelegate, function() {
 		this._content.styleProp('lineHeight', null);
 		this._content.styleProp('padding-top', null);
 		if (this._vAlign === 'bottom') {
-			this._content.styleProp('padding-top', 'calc(' + this._content.height() + 'px - 1em)');
+			// no clean way to bottom-align a single-line text without using an extra container node
+			// best compromise I could find is the following, adding padding-top with a line-height of 1.1 (so that characters "legs", like q, p, etc. are not cut for most fonts)
+			this._content.styleProp('padding-top', 'calc(' + this._content.height() + 'px - 1.1em)');
+			this._content.styleProp('lineHeight', '1.1');
 		} else if (this._vAlign === 'middle') {
 			this._content.styleProp('lineHeight', this._content.height() + 'px');
 		}
