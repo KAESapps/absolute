@@ -1,4 +1,14 @@
 var compose = require('ksf/utils/compose');
+var JSS = require('ksf/dom/style/JSS');
+
+var baseStyle = new JSS({
+	position: 'absolute',
+	boxSizing: 'border-box',
+	// est-ce nécessaire de le forcer au démarrage ?
+	display: 'block',
+	// nécessaire pour les cas où cet élément est ajouté dans un dom-node avec pointer-events: none (transparent)
+	pointerEvents: 'auto',
+});
 
 module.exports = compose(function(tag, namespace) {
 	var node;
@@ -6,12 +16,9 @@ module.exports = compose(function(tag, namespace) {
 		node = this.domNode = document.createElementNS(namespace, tag);
 	} else {
 		node = this.domNode = document.createElement(tag || 'div');
-	}
-	node.style.position = 'absolute';
-	node.style.boxSizing = 'border-box';
-	node.style.display = 'block'; // est-ce nécessaire de le forcer au démarrage ?
+	}	
 	this._visible = true;
-	node.style['-webkit-transform'] = 'translateZ(0px)';
+	baseStyle.apply(this.domNode);
 }, {
 	left: function(left) {
 		if (arguments.length) {
@@ -77,7 +84,7 @@ module.exports = compose(function(tag, namespace) {
 	visible: function(visible) {
 		if (arguments.length) {
 			this._visible = visible;
-			this.domNode.style.display = (visible ? 'block' : 'none');
+			this.domNode.style.display = (visible ? '' : 'none');
 			return this;
 		} else {
 			return this._visible;
@@ -85,6 +92,7 @@ module.exports = compose(function(tag, namespace) {
 	},
 	attr: function(attr, value) {
 		this.domNode.setAttribute(attr, value);
+		return this;
 	},
 	attrs: function(attrs) {
 		Object.keys(attrs).forEach(function(attr) {
