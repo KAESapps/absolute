@@ -47,5 +47,6 @@ module.exports = compose(function ZPile() {
 	top: delegateGetSet('_verticalLayouter', 'position'),
 	zIndex: delegateGetSet('_zLayouter', 'position'),
 	parentNode: delegateGetSet('_container', 'parentNode'),
+	containerVisible: delegateGetSet('_container', 'containerVisible'),
 	visible: delegateGetSet('_container', 'visible'),
 });

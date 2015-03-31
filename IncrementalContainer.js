@@ -3,6 +3,7 @@ var compose = require('ksf/utils/compose');
 
 module.exports = compose(function() {
 	this._children = {};
+	this._visible = true;
 }, {
 	content: function(cmps) {
 		Object.keys(this._children).forEach(this.remove, this);
@@ -13,6 +14,7 @@ module.exports = compose(function() {
 	},
 	add: function(key, cmp) {
 		this._children[key] = cmp;
+		this._applyChildVisible(cmp);
 		cmp.parentNode(this._parentNode);
 		return cmp;
 	},
@@ -34,25 +36,22 @@ module.exports = compose(function() {
 			return this._parentNode;
 		}
 	},
+	_applyChildVisible: function(child) {
+		if (this._containerVisible === undefined) { return; }
+		child.containerVisible(this._containerVisible && this._visible);
+	},
+	containerVisible: function(visible) {
+		this._containerVisible = visible;
+		Object.keys(this._children).forEach(function(key) {
+			this._applyChildVisible(this._children[key]);
+		}, this);
+		return this;
+	},
 	visible: function(visible) {
-		if (arguments.length) {
-			this._visible = visible;
-			Object.keys(this._children).forEach(this._applyVisible, this);
-			return this;
-		} else {
-			return this._visible;
-		}
-	},
-	_insertInParentNode: function(key) {
-		var cmp = this._children[key];
-		cmp.parentNode(this._parentNode);
-	},
-	_removeFromParentNode: function(key) {
-		var cmp = this._children[key];
-		cmp.parentNode(null);
-	},
-	_applyVisible: function(key) {
-		var cmp = this._children[key];
-		cmp.visible(this._visible);
+		this._visible = visible;
+		Object.keys(this._children).forEach(function(key) {
+			this._applyChildVisible(this._children[key]);
+		}, this);
+		return this;
 	},
 });

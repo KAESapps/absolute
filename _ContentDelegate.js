@@ -10,5 +10,6 @@ module.exports = {
 	top: delegateGetSet('_content', 'top'),
 	zIndex: delegateGetSet('_content', 'zIndex'),
 	parentNode: delegateGetSet('_content', 'parentNode'),
+	containerVisible: delegateGetSet('_content', 'containerVisible'),
 	visible: delegateGetSet('_content', 'visible'),
 };

@@ -22,4 +22,5 @@ module.exports = compose(function(size) {
 	height: delegateStore('height'),
 	depth: function() { return 0; },
 	parentNode: delegateStore('parentNode'),
+	containerVisible: delegateStore('containerVisible')
 });

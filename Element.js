@@ -84,11 +84,20 @@ module.exports = compose(function(tag, namespace) {
 	visible: function(visible) {
 		if (arguments.length) {
 			this._visible = visible;
-			this.domNode.style.display = (visible ? '' : 'none');
+			this._applyVisible();
 			return this;
 		} else {
 			return this._visible;
 		}
+	},
+	containerVisible: function(visible) {
+		this._containerVisible = visible;
+		this._applyVisible();
+		return this;
+	},
+	_applyVisible: function() {
+		if (this._containerVisible === undefined) { return; }
+		this.domNode.style.display = (this._containerVisible && this._visible) ? '' : 'none';
 	},
 	attr: function(attr, value) {
 		this.domNode.setAttribute(attr, value);
