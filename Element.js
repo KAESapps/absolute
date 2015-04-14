@@ -8,6 +8,7 @@ var baseStyle = new JSS({
 	display: 'block',
 	// nécessaire pour les cas où cet élément est ajouté dans un dom-node avec pointer-events: none (transparent)
 	pointerEvents: 'auto',
+	font: 'inherit'
 });
 
 module.exports = compose(function(tag, namespace) {
@@ -135,8 +136,10 @@ module.exports = compose(function(tag, namespace) {
 	},
 	on: function(type, cb) {
 		this.domNode.addEventListener(type, cb);
+		return this;
 	},
 	off: function(type, cb) {
 		this.domNode.removeEventListener(type, cb);
+		return this;
 	},
 });

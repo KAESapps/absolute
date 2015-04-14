@@ -23,8 +23,10 @@ module.exports = compose(_Destroyable, _ContentDelegate, function() {
 		return this;
 	},
 	color: function(color) {
-		this._domNode.style.backgroundColor = color;
-		this._domNode.style.borderColor = color;
+		this._content.style({
+			backgroundColor: color,
+			borderColor: color
+		});
 		return this;
 	},
 });

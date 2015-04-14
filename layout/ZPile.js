@@ -47,7 +47,7 @@ module.exports = compose(function() {
 			var delta = position - this._position;
 			this._position = position;
 			this._childrenOrder.forEach(function(cmp) {
-				cmp.zIndex(cmp.zIndex + delta);
+				cmp.zIndex(cmp.zIndex() + delta);
 			});
 			return this;
 		} else {

@@ -62,6 +62,9 @@ module.exports = compose(function() {
 	},
 	width: delegateGetSet('_horizontalLayouter', 'size'),
 	height: delegateGetSet('_verticalLayouter', 'size'),
+	onHeight: function(cb) {
+		return this._verticalLayouter.onSize(cb);
+	},
 	depth: delegateGetSet('_zLayouter', 'size'),
 	left: delegateGetSet('_horizontalLayouter', 'position'),
 	top: delegateGetSet('_verticalLayouter', 'position'),

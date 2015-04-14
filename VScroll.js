@@ -38,5 +38,6 @@ module.exports = compose(function(content, options) {
 	top: delegateGetSet('_container', 'top'),
 	zIndex: delegateGetSet('_container', 'zIndex'),
 	parentNode: delegateGetSet('_container', 'parentNode'),
+	containerVisible: delegateGetSet('_container', 'containerVisible'),
 	visible: delegateGetSet('_container', 'visible'),
 });

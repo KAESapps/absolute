@@ -1,16 +1,20 @@
 var compose = require('ksf/utils/compose');
 var _Evented = require('ksf/base/_Evented');
+var _Destroyable = require('ksf/base/_Destroyable');
+var capitalize = require('lodash/string/capitalize');
 
 /**
 Container qui positionne des enfants de taille fixe dans un ordre donné.
 Peut-être utilisé de façon incrémental
 */
-module.exports = compose(_Evented, function(axis) {
+module.exports = compose(_Evented, _Destroyable, function(axis) {
 	this._children = {};
 	this._sizeProp = (axis === 'vertical' ? 'height' : 'width');
+	this._onSizeMethod = 'on' + capitalize(this._sizeProp);
 	this._positionProp = (axis === 'vertical' ? 'top' : 'left');
 	this._firstChildKey = null;
 	this._lastChildKey = null;
+	this._size = 0;
 }, {
 	content: function(config) {
 		var sizeProp = this._sizeProp;
@@ -19,6 +23,7 @@ module.exports = compose(_Evented, function(axis) {
 		var previous = null;
 		config.forEach(function(child) {
 			previous && (children[previous].next = child.key);
+			
 			var cmpSize = child.cmp[sizeProp]();
 			children[child.key] = {
 				previous: previous,
@@ -28,6 +33,10 @@ module.exports = compose(_Evented, function(axis) {
 				size: cmpSize,
 				offset: offset,
 			};
+			child.cmp[this._onSizeMethod] && this._own(child.cmp[this._onSizeMethod](function(size) {
+				this._updateChildSize(child.key, size);
+			}.bind(this)), 'onsize' + child.key);
+			
 			offset += cmpSize;
 			previous = child.key;
 		}, this);
@@ -41,6 +50,12 @@ module.exports = compose(_Evented, function(axis) {
 
 		return this;
 	},
+	_updateChildSize: function(key, size) {
+		this._size += size - this._children[key].size;
+		this._children[key].size = size;
+
+		this._emit('size', this._size);
+	},
 	_add: function(key, cmp, beforeKey) {
 		beforeKey = beforeKey || null;
 		var sizeProp = this._sizeProp;
@@ -49,6 +64,7 @@ module.exports = compose(_Evented, function(axis) {
 		var previousChild = previousKey ? this._children[previousKey] : null;
 		var offset = previousChild ? previousChild.offset + previousChild.size : 0;
 		var cmpSize = cmp[sizeProp]();
+		
 		this._children[key] = {
 			previous: previousKey,
 			next: beforeKey,
@@ -57,6 +73,11 @@ module.exports = compose(_Evented, function(axis) {
 			size: cmpSize,
 			offset: offset,
 		};
+		
+		cmp[this._onSizeMethod] && this._own(cmp[this._onSizeMethod](function(size) {
+			this._updateChildSize(key, size);
+		}.bind(this)), 'onsize' + key);
+		
 		previousKey && (this._children[previousKey].next = key);
 		beforeKey && (this._children[beforeKey].previous = key);
 
@@ -68,7 +89,7 @@ module.exports = compose(_Evented, function(axis) {
 			this._lastChildKey = key;
 		}
 
-		this._size = (this._size || 0) + cmpSize;
+		this._size = this._size + cmpSize;
 	},
 	add: function(key, cmp, beforeKey) {
 		this._add(key, cmp, beforeKey);
@@ -94,6 +115,7 @@ module.exports = compose(_Evented, function(axis) {
 			this._lastChildKey = previousKey;
 		}
 
+		this._destroy('onsize' + key);
 		delete this._children[key];
 
 		this._size = this._size - child.size;

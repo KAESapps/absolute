@@ -27,4 +27,5 @@ module.exports = compose(function(content, margin) {
 	height: delegateGetSet('_verticalLayouter', 'size'),
 	depth: delegateGetSet('_content', 'depth'),
 	parentNode: delegateGetSet('_content', 'parentNode'),
+	containerVisible: delegateGetSet('_content', 'containerVisible'),
 });
