@@ -10,7 +10,9 @@ var easeInQuart = function(t) {
 };
 
 var PageContainer = compose(function() {
-	this._container = new Elmt();
+	this._container = new Elmt().style({
+		transform: 'translateZ(0)'
+	});
 
 	this._hLayout = new Full('horizontal').content([this._container]);
 	this._vLayout = new Full('vertical').content([this._container]);
@@ -122,7 +124,7 @@ module.exports = compose(function() {
 		}
 	},
 	height: delegateGetSet('_vLayout', 'size'),
-	depth: delegateGetSet('_zLayout', 'depth'),
+	depth: delegateGetSet('_zLayout', 'size'),
 	parentNode: delegateGetSet('_container', 'parentNode'),
 	visible: delegateGetSet('_container', 'visible'),
 });
