@@ -54,4 +54,5 @@ module.exports = compose(function(content) {
 	zIndex: delegateGetSet('_zLayouter', 'position'),
 	parentNode: delegateGetSet('_container', 'parentNode'),
 	visible: delegateGetSet('_container', 'visible'),
+	containerVisible: delegateGetSet('_container', 'containerVisible'),
 });

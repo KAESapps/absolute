@@ -43,6 +43,7 @@ var PageContainer = compose(function() {
 	height: delegateGetSet('_vLayout', 'size'),
 	depth: delegateGetSet('_container', 'depth'),
 	visible: delegateGetSet('_container', 'visible'),
+	containerVisible: delegateGetSet('_container', 'containerVisible'),
 });
 
 module.exports = compose(function() {
@@ -127,4 +128,5 @@ module.exports = compose(function() {
 	depth: delegateGetSet('_zLayout', 'size'),
 	parentNode: delegateGetSet('_container', 'parentNode'),
 	visible: delegateGetSet('_container', 'visible'),
+	containerVisible: delegateGetSet('_container', 'containerVisible'),
 });

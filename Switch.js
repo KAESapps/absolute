@@ -35,4 +35,5 @@ module.exports = compose(function() {
 	zIndex: contentGetSet('zIndex'),
 	parentNode: contentGetSet('parentNode'),
 	visible: contentGetSet('visible'),
+	containerVisible: contentGetSet('containerVisible'),
 });
