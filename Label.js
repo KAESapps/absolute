@@ -60,5 +60,9 @@ module.exports = compose(_ContentDelegate, function() {
 			});
 		}
 		return this;
+	},
+	textDecoration: function(value) {
+		this._content.styleProp('textDecoration', value);
+		return this;
 	}
 });

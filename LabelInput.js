@@ -1,10 +1,10 @@
 var compose = require('ksf/utils/compose');
 var _Destroyable = require('ksf/base/_Destroyable');
-var Elmt = require('./Element');
+var FocusableElement = require('./FocusableElement');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function(args) {
-	this._content = new Elmt('input');
+	this._content = new FocusableElement('input');
 	this._content.prop('type', 'text');
 	this._asYouType = args && args.asYouType;
 }, {
@@ -36,6 +36,26 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(args) {
 	},
 	style: function(style) {
 		this._content.style(style);
+		return this;
+	},
+	focus: function(focus) {
+		if (arguments.length) {
+			this._content.focus(focus);
+			return this;
+		} else {
+			return this._content.focus();
+		}
+	},
+	onFocus: function(cb) {
+		this._content.onFocus(cb);
+		return this;
+	},
+	offFocus: function(cb) {
+		this._content.offFocus(cb);
+		return this;
+	},
+	onKeyDown: function(cb) {
+		this._content.on('keydown', cb);
 		return this;
 	}
 });
