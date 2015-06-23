@@ -4,7 +4,7 @@ var Elmt = require('./Element');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function() {
-	this._content = new Elmt('button').styleProp('font', 'inherit');
+	this._content = new Elmt('button');
 	this._content.styleProp('cursor', 'pointer');
 }, {
 	value: function(value) {
@@ -29,4 +29,15 @@ module.exports = compose(_Destroyable, _ContentDelegate, function() {
 		});
 		return this;
 	},
+	textStyle: function(textStyle) {
+		this._content.style({
+			color: textStyle.color,
+		});
+		textStyle.font && this._content.style({
+			fontFamily: textStyle.font.family,
+			fontSize: textStyle.font.size,
+			fontWeight: textStyle.font.weight,
+		});
+		return this;
+	}
 });
