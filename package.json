@@ -12,6 +12,6 @@
     "testling": "latest"
   },
   "scripts": {
-    "test": "browserify test/*.js | testling"
+    "test": "browserify test/*.js | node_modules/testling/bin/cmd.js"
   }
 }

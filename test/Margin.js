@@ -1,10 +1,10 @@
 var test = require('tape');
-var Marge = require('../Marge');
+var Margin = require('../Margin');
 var Elmt = require('../Element');
 
 test('container api', function(t) {
 	var el = new Elmt();
-	var container = new Marge(el, 10)
+	var container = new Margin(el, 10)
 		.width(100)
 		.height(100)
 		.left(0)
@@ -24,9 +24,9 @@ test('container api', function(t) {
 	t.end();
 });
 
-test('same marge for all sides', function(t) {
+test('same margin for all sides', function(t) {
 	var el = new Elmt();
-	new Marge(el, 10)
+	new Margin(el, 10)
 		.width(100)
 		.height(100)
 		.left(0)
@@ -48,7 +48,7 @@ test('same marge for all sides', function(t) {
 
 test('horizontal and vertical marges', function(t) {
 	var el = new Elmt();
-	new Marge(el, {
+	new Margin(el, {
 		horizontal: 20,
 		vertical: 30,
 	})
@@ -73,7 +73,7 @@ test('horizontal and vertical marges', function(t) {
 
 test('different marges for horizontal sides', function(t) {
 	var el = new Elmt();
-	new Marge(el, {
+	new Margin(el, {
 		left: 20,
 		right: 10,
 		vertical: 30,
