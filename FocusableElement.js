@@ -18,7 +18,8 @@ module.exports = compose(Element, _Evented, function() {
 	this._focus = false;
 }, {
 	onFocus: function(cb) {
-		return this._on('focus', cb);
+		this._on('focus', cb);
+		return this;
 	},
 	offFocus: function(cb) {
 		// TODO
