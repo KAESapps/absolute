@@ -5,7 +5,7 @@ var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function(args) {
 	this._content = new FocusableElement('input');
-	this._content.prop('type', 'text');
+	this._content.prop('type', args && args.type ? args.type : 'text');
 	this._asYouType = args && args.asYouType;
 }, {
 	value: function(value) {
