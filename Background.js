@@ -16,6 +16,10 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(content) {
 		this._bg.styleProp('backgroundColor', color);
 		return this;
 	},
+	opacity: function(value) {
+		this._bg.styleProp('opacity', value);
+		return this;		
+	},
 	border: function(border) {
 		if (typeof border === 'string') {
 			this._bg.styleProp('border', border);
