@@ -17,10 +17,10 @@ module.exports = compose(function ZPile() {
 	content: function(content) {
 		this._verticalLayouter.content(content);
 		this._horizontalLayouter.content(content);
-		this._zLayouter.content(Object.keys(content).map(function(key) {
+		this._zLayouter.content(content.map(function(cmp, index) {
 			return {
-				key: key,
-				cmp: content[key],
+				key: index+'',
+				cmp: cmp,
 			};
 		}));
 		this._container.content(content);
