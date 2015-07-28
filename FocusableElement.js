@@ -2,7 +2,7 @@ var compose = require('ksf/utils/compose');
 var Element = require('./Element');
 var _Evented = require('ksf/base/_Evented');
 
-module.exports = compose(Element, _Evented, function() {
+module.exports = compose(_Evented, Element, function() {
 	this.prop('tabIndex', -1).style({ outline: 'none' });
 	var self = this;
 	this.on('focus', function() {
