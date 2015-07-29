@@ -11,8 +11,6 @@ var _ContentDelegate = require('./_ContentDelegate');
 // pilote un composant pour le mettre en plein écran et réagir au redimensionnement
 module.exports = compose(_Destroyable, _ContentDelegate, function(content) {
 	sizePage(content);
-	content.left(0).top(0).zIndex(0).parentNode(document.body);
+	content.left(0).top(0).zIndex(0).parentNode(document.body).containerVisible(true);
 	window.addEventListener('resize', sizePage.bind(null, content));
 });
-
-
