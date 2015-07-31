@@ -5,9 +5,7 @@ var Container = require('./Container');
 var Full = require('./layout/Full');
 var ZFlat = require('./layout/ZFlat');
 
-var easeInQuart = function(t) {
-	return t*t*t*t;
-};
+var easeOutQuint = function (t) { return 1+(--t)*t*t*t*t; };
 
 var PageContainer = compose(function() {
 	this._container = new Elmt().style({
@@ -49,7 +47,7 @@ var PageContainer = compose(function() {
 module.exports = compose(function() {
 	this._props = {};
 	this._animInfos = {
-		duration: 400,
+		duration: 500,
 		startTime: null
 	};
 	this._currentPageContainer = new PageContainer();
@@ -83,11 +81,11 @@ module.exports = compose(function() {
 		return this;
 	},
 	_animate: function() {
-		var t = easeInQuart(Math.min((Date.now() - this._animInfos.startTime) / this._animInfos.duration, 1));
+		var t = easeOutQuint(Math.min((Date.now() - this._animInfos.startTime) / this._animInfos.duration, 1));
 		var delta = t * this.width();
 
 		var dir = this._animInfos.direction === 'right' ? 1 : -1;
-		
+
 		this._previousPageContainer.left(this.left() + delta * dir);
 		this._currentPageContainer.left(this.left() - (this.width() - delta) * dir);
 
