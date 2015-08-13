@@ -57,5 +57,13 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(args) {
 	onKeyDown: function(cb) {
 		this._content.on('keydown', cb);
 		return this;
+	},
+	disabled: function (value) {
+		if (arguments.length) {
+			this._content.prop('disabled', value)
+			return this
+		} else {
+			return this._content.prop('disabled')
+		}
 	}
 });
