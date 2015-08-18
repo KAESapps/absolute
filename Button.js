@@ -39,5 +39,13 @@ module.exports = compose(_Destroyable, _ContentDelegate, function() {
 			fontWeight: textStyle.font.weight,
 		});
 		return this;
+	},
+	disabled: function (value) {
+	if (arguments.length) {
+		this._content.prop('disabled', value)
+		return this
+	} else {
+		return this._content.prop('disabled')
 	}
+}
 });
