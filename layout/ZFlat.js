@@ -15,6 +15,10 @@ module.exports = compose(function() {
 		return this;
 	},
 	add: function(key, cmp) {
+		// TODO: remove check in build?
+		if (key in this._children) {
+			throw 'key already used';
+		}
 		this._children[key] = cmp;
 		this._applyPosition(key);
 		this._updateSize(key);

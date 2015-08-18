@@ -23,7 +23,7 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 		var previous = null;
 		config.forEach(function(child) {
 			previous && (children[previous].next = child.key);
-			
+
 			var cmpSize = child.cmp[sizeProp]();
 			children[child.key] = {
 				previous: previous,
@@ -36,7 +36,7 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 			child.cmp[this._onSizeMethod] && this._own(child.cmp[this._onSizeMethod](function(size) {
 				this._updateChildSize(child.key, size);
 			}.bind(this)), 'onsize' + child.key);
-			
+
 			offset += cmpSize;
 			previous = child.key;
 		}, this);
@@ -57,6 +57,11 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 		this._emit('size', this._size);
 	},
 	_add: function(key, cmp, beforeKey) {
+		// TODO: remove check in build?
+		if (key in this._children) {
+			throw new Error ("this key already exists")
+		}
+
 		beforeKey = beforeKey || null;
 		var sizeProp = this._sizeProp;
 
@@ -64,7 +69,7 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 		var previousChild = previousKey ? this._children[previousKey] : null;
 		var offset = previousChild ? previousChild.offset + previousChild.size : 0;
 		var cmpSize = cmp[sizeProp]();
-		
+
 		this._children[key] = {
 			previous: previousKey,
 			next: beforeKey,
@@ -73,11 +78,11 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 			size: cmpSize,
 			offset: offset,
 		};
-		
+
 		cmp[this._onSizeMethod] && this._own(cmp[this._onSizeMethod](function(size) {
 			this._updateChildSize(key, size);
 		}.bind(this)), 'onsize' + key);
-		
+
 		previousKey && (this._children[previousKey].next = key);
 		beforeKey && (this._children[beforeKey].previous = key);
 
