@@ -28,4 +28,5 @@ module.exports = compose(function(content, margin) {
 	depth: delegateGetSet('_content', 'depth'),
 	parentNode: delegateGetSet('_content', 'parentNode'),
 	containerVisible: delegateGetSet('_content', 'containerVisible'),
+	visible: delegateGetSet('_content', 'visible'),
 });
