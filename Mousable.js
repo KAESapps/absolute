@@ -5,18 +5,18 @@ var ZPile = require('./ZPile');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_Destroyable, _ContentDelegate, function(content) {
-	this._clickArea = new Elmt();
+	this.clickArea = new Elmt();
 	this._content = new ZPile().content([
 		content,
-		this._clickArea
+		this.clickArea
 	]);
 }, {
 	cursor: function(cursorType) {
-		this._clickArea.styleProp('cursor', cursorType);
+		this.clickArea.styleProp('cursor', cursorType);
 		return this;
 	},
 	on: function(domEventName, cb, key) {
-		this._clickArea.on(domEventName, cb);
+		this.clickArea.on(domEventName, cb);
 		this._own({
 			eventName: domEventName,
 			cb: cb
@@ -26,7 +26,7 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(content) {
 	off: function(key) {
 		var ev = this._owned[key];
 		this._unown(key);
-		this._clickArea.off(ev.eventName, ev.cb);
+		this.clickArea.off(ev.eventName, ev.cb);
 		return this;
 	},
 });
