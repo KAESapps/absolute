@@ -1,15 +1,15 @@
 var compose = require('ksf/utils/compose');
-var JSS = require('ksf/dom/style/JSS');
+var Style = require('ksf/dom/style/Style');
 
-var baseStyle = new JSS({
-	position: 'absolute',
-	boxSizing: 'border-box',
+var baseStyle = new Style('#this { \
+	position: absolute;	\
+	box-sizing: border-box;' +
 	// est-ce nécessaire de le forcer au démarrage ?
-	display: 'block',
-	// nécessaire pour les cas où cet élément est ajouté dans un dom-node avec pointer-events: none (transparent)
-	pointerEvents: 'auto',
-	font: 'inherit'
-});
+	'display: block;' +
+	// nécessaire pour les cas où cet élément est ajouté dans un dom-node avec pointer-events: none (transparent)	\
+	'pointer-events: auto;	\
+	font: inherit;	\
+}');
 
 module.exports = compose(function(tag, namespace) {
 	var node;
@@ -17,7 +17,7 @@ module.exports = compose(function(tag, namespace) {
 		node = this.domNode = document.createElementNS(namespace, tag);
 	} else {
 		node = this.domNode = document.createElement(tag || 'div');
-	}	
+	}
 	this._visible = true;
 	baseStyle.apply(this.domNode);
 }, {
@@ -134,12 +134,12 @@ module.exports = compose(function(tag, namespace) {
 		}, this);
 		return this;
 	},
-	on: function(type, cb) {
-		this.domNode.addEventListener(type, cb);
+	on: function(type, cb, capture) {
+		this.domNode.addEventListener(type, cb, capture);
 		return this;
 	},
-	off: function(type, cb) {
-		this.domNode.removeEventListener(type, cb);
+	off: function(type, cb, capture) {
+		this.domNode.removeEventListener(type, cb, capture);
 		return this;
 	},
 });
