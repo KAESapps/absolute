@@ -48,6 +48,10 @@ module.exports = compose(_ContentDelegate, function() {
 		this._content.styleProp('color', color);
 		return this;
 	},
+	backgroundColor: function (color) {
+		this._content.styleProp('backgroundColor', color);
+		return this;
+	},
 	font: function(font) {
 		if (typeof font === 'string') {
 			this._content.styleProp('font', font);
@@ -64,5 +68,5 @@ module.exports = compose(_ContentDelegate, function() {
 	textDecoration: function(value) {
 		this._content.styleProp('textDecoration', value);
 		return this;
-	}
+	},
 });
