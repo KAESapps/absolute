@@ -1,4 +1,5 @@
 var compose = require('ksf/utils/compose');
+var _Destroyable = require('ksf/base/_Destroyable');
 var delegateGetSet = require('./utils/delegateGetSet');
 
 var Flex = require('./layout/Flex');
@@ -15,9 +16,9 @@ Impose la largeur à tous les enfants
 Demande la hauteur aux enfants fixes
 Impose la hauteur aux enfants flex
 */
-module.exports = compose(function(content) {
+module.exports = compose(_Destroyable, function(content) {
 	this._container = new Container(content.map(getCmp));
-	this._verticalLayouter = new Flex('vertical', content.map(function(arg) {
+	this._verticalLayouter = this._own(new Flex('vertical', content.map(function(arg) {
 		if (Array.isArray(arg)) {
 			if (typeof arg[1] === 'number') {
 				return {
@@ -28,7 +29,7 @@ module.exports = compose(function(content) {
 			} else {
 				return {
 					cmp: arg[0],
-					type: 'fixed',
+					type: arg[1],
 				};
 			}
 		} else {
@@ -38,7 +39,7 @@ module.exports = compose(function(content) {
 				weight: 1,
 			};
 		}
-	}));
+	})));
 	var cmpsAsDict = content.reduce(function(acc, arg, index) {
 		acc[index] = getCmp(arg);
 		return acc;

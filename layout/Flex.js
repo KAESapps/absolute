@@ -1,15 +1,28 @@
 var compose = require('ksf/utils/compose');
+var _Destroyable = require('ksf/base/_Destroyable');
+var on = require('ksf/utils/on');
 
 /**
 Layouter qui dimensionne et positionne des enfants de façon réactive en fonction de sa taille et de sa position
 */
 
-module.exports = compose(function(axis, children) {
+module.exports = compose(_Destroyable, function(axis, children) {
 	this._sizeProp = (axis === 'horizontal' ? 'width' : 'height');
 	this._positionProp = (axis === 'horizontal' ? 'left' : 'top');
 	this._size = null;
 	this._position = null;
 	this._children = children;
+
+	var initLayout = function() {
+		this._initLayout();
+	}.bind(this)
+
+	for (var i = children.length - 1; i >= 0; i--) {
+		var child = children[i];
+		if (child.type === 'reactive') {
+			this._own(on(child.cmp, this._sizeProp, initLayout))
+		}
+	}
 	this._initLayout();
 }, {
 	size: function(size) {
