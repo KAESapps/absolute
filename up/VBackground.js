@@ -45,5 +45,9 @@ module.exports = compose(_ContentDelegate, function(content) {
 	shadow: function(shadow) {
 		this._bg.styleProp('boxShadow', shadow);
 		return this;
-	}
+	},
+	opacity: function(value) {
+		this._bg.styleProp('opacity', value);
+		return this;		
+	},
 });

@@ -66,10 +66,13 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 		var sizeProp = this._sizeProp;
 
 		var previousKey = beforeKey ? this._children[beforeKey].previous : this._lastChildKey;
-		var previousChild = previousKey ? this._children[previousKey] : null;
+		var previousChild = previousKey !== null ? this._children[previousKey] : null;
 		var offset = previousChild ? previousChild.offset + previousChild.size : 0;
 		var cmpSize = cmp[sizeProp]();
 
+		if (previousChild) {
+			previousChild.next = key
+		}
 		this._children[key] = {
 			previous: previousKey,
 			next: beforeKey,
@@ -137,9 +140,11 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 		this._add(key, cmp, beforeKey);
 	},
 	_layoutFrom: function(key) {
+		if (this._position === undefined) { return }
+
 		var positionProp = this._positionProp;
 		var children = this._children;
-		while(key) {
+		while(key !== null) {
 			var child = children[key];
 			var previousChild = children[child.previous];
 			var offset = child.offset = previousChild ? previousChild.offset + previousChild.size : 0;

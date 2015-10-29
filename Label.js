@@ -3,7 +3,7 @@ var Elmt = require('./Element');
 var _ContentDelegate = require('./_ContentDelegate');
 
 module.exports = compose(_ContentDelegate, function() {
-	this._content = new Elmt().style({
+	this._content = this.element = new Elmt().style({
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
