@@ -4,8 +4,8 @@ var delegateGetSet = require('./utils/delegateGetSet');
 var getSet = require('./utils/getSet')
 var onOffEvent = require('./utils/onOffEvent')
 
-module.exports = compose(_Evented, function(ratioHW, content) {
-  this._ratio = ratioHW
+module.exports = compose(_Evented, function(ratioWH, content) {
+  this._ratio = ratioWH
   this._content = content
 }, {
   _applyWidth: function(width) {
@@ -18,7 +18,7 @@ module.exports = compose(_Evented, function(ratioHW, content) {
     },
     function(width) {
       this._applyWidth(width)
-      this._applyHeight(width * this._ratio)
+      this._applyHeight(width / this._ratio)
     }
   ),
   _applyHeight: function(height) {
@@ -31,7 +31,7 @@ module.exports = compose(_Evented, function(ratioHW, content) {
     },
     function(height) {
       this._applyHeight(height)
-      this._applyWidth(height / this._ratio)
+      this._applyWidth(height * this._ratio)
     }
   ),
   left: delegateGetSet('_content', 'left'),
