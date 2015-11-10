@@ -17,8 +17,8 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(options) {
 }, {
 	value: function(value) {
 		if (arguments.length) {
-			if (value !== undefined) {
-				this._content.prop('value', value);				
+			if (typeof value === 'string') {
+				this._content.prop('value', value);
 			} else {
 				this._content.prop('selectedIndex', -1);
 			}
