@@ -1,5 +1,6 @@
 var compose = require('ksf/utils/compose');
 var delegateGetSet = require('./utils/delegateGetSet');
+var delegateGet = require('./utils/delegateGet');
 
 var Align = require('./layout/Align');
 
@@ -28,4 +29,8 @@ module.exports = compose(function(content, vertical) {
 	parentNode: delegateGetSet('_content', 'parentNode'),
 	containerVisible: delegateGetSet('_content', 'containerVisible'),
 	visible: delegateGetSet('_content', 'visible'),
+	minHeight: delegateGet('_content', 'height'),
+	onMinHeight: function(cb) {
+		this._content.onHeight(cb)
+	},
 });

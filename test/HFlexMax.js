@@ -1,6 +1,6 @@
 var HFlex = require('../HFlex');
 var VPile = require('../VPile');
-var Align = require('../Align');
+var VAlign = require('../VAlign');
 var Label = require('../Label');
 var Switch = require('../Switch');
 
@@ -19,12 +19,12 @@ var sw = window.sw = new Switch({ autoHeight: true })
 
 new VPile().content([
 	new HFlex([
-		new Align(pileContent1.width(100), 'middle', 'middle'),
-		new Align(pileContent2.width(100), 'middle', 'middle'),
+		new VAlign(pileContent1, 'middle'),
+		new VAlign(pileContent2, 'middle'),
 	], { autoHeight: true }),
 	sw,
 	new Label().value("Footer").height(20),
-]).left(0).top(0).zIndex(0).width(200).parentNode(document.body);
+]).left(0).top(0).zIndex(0).width(400).parentNode(document.body);
 
 pileContent1.add('row2', new Label().value("content1 row2").height(20));
 pileContent2.add('row2', new Label().value("content1 row2").height(80));

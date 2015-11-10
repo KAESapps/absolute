@@ -50,7 +50,19 @@ module.exports = compose(_Destroyable, _Evented, function(opts) {
 		}
 		return this;
 	},
-	width: contentGetSet('width'),
+	width: function(value) {
+		if (arguments.length) {
+			this._props.width = value;
+			this._content && this._content.width(value);
+			return this;
+		} else {
+			if (this._opts.autoWidth) {
+				return this._content ? this._content.width() : 0
+			} else {
+				return this._props.width;
+			}
+		}
+	},
 	height: function(value) {
 		if (arguments.length) {
 			this._props.height = value;
