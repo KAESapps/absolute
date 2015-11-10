@@ -1,4 +1,5 @@
 var compose = require('ksf/utils/compose');
+var capitalize = require('lodash/string/capitalize')
 
 /**
 Layouter qui positionne un enfant de façon réactive en fonction de sa taille et de sa position
@@ -12,6 +13,12 @@ module.exports = compose(function(axis, content, align) {
 	this._content = content;
 	this._align = align;
 	this._contentSize = this._content[this._sizeProp]();
+
+	this._content['on' + capitalize(this._sizeProp)] && this._content['on' + capitalize(this._sizeProp)](function() {
+		this._contentSize = this._content[this._sizeProp]();
+		this._calculateContentOffset();
+		this._positionContent();
+	}.bind(this))
 }, {
 	size: function(size) {
 		if (arguments.length) {

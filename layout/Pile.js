@@ -54,6 +54,7 @@ module.exports = compose(_Evented, _Destroyable, function(axis) {
 		this._size += size - this._children[key].size;
 		this._children[key].size = size;
 
+		this._layoutFrom(key)
 		this._emit('size', this._size);
 	},
 	_add: function(key, cmp, beforeKey) {

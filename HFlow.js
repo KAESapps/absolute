@@ -9,16 +9,22 @@ var defaults = require('lodash/object/defaults')
 var defaultsDeep = require('lodash/object/defaultsDeep')
 
 function normalizeContentArg(contentArg, defaultArgs) {
-  return contentArg.map(function(itemArg) {
-		if (Array.isArray(itemArg)) {
-      return defaults({
-        cmp: itemArg[1],
-      }, itemArg[0], defaultArgs)
+  return contentArg.map(function(userItemArg) {
+    var itemArg
+		if (Array.isArray(userItemArg)) {
+      itemArg = defaults({
+        cmp: userItemArg[1],
+      }, userItemArg[0], defaultArgs)
 		} else {
-			return defaults({
-				cmp: itemArg,
+			itemArg = defaults({
+				cmp: userItemArg,
 			}, defaultArgs)
 		}
+    if (itemArg.width === 'auto') {
+      // get width on component
+      itemArg.width = itemArg.cmp.width()
+    }
+    return itemArg
 	})
 }
 
@@ -26,7 +32,7 @@ module.exports = compose(_Evented, function(args) {
   // normalize args
   this._args = defaultsDeep({}, args, {
     defaults: {
-      width: null,
+      width: 'auto',
     },
   })
 

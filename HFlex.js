@@ -1,9 +1,11 @@
 var compose = require('ksf/utils/compose');
 var _Destroyable = require('ksf/base/_Destroyable');
 var delegateGetSet = require('./utils/delegateGetSet');
+var defaults = require('lodash/object/defaults')
 
 var Flex = require('./layout/Flex');
 var Full = require('./layout/Full');
+var FullMax = require('./layout/FullMax');
 var ZFlat = require('./layout/ZFlat');
 var Container = require('./Container');
 
@@ -16,7 +18,11 @@ Impose la hauteur à tous les enfants
 Demande la largeur aux enfants fixes
 Impose la largeur aux enfants flex
 */
-module.exports = compose(_Destroyable, function(content) {
+module.exports = compose(_Destroyable, function(content, opts) {
+	opts = defaults({}, opts, {
+		autoHeight: false,
+	})
+
 	this._container = new Container(content.map(getCmp));
 	this._horizontalLayouter = this._own(new Flex('horizontal', content.map(function(arg) {
 		if (Array.isArray(arg)) {
@@ -24,7 +30,7 @@ module.exports = compose(_Destroyable, function(content) {
 				return {
 					cmp: arg[0],
 					type: 'flex',
-					weight: arg[1]
+					weight: arg[1],
 				};
 			} else {
 				return {
@@ -44,11 +50,18 @@ module.exports = compose(_Destroyable, function(content) {
 		acc[index] = getCmp(arg);
 		return acc;
 	}, {});
-	this._verticalLayouter = new Full('vertical').content(cmpsAsDict);
+	if (opts.autoHeight) {
+		this._verticalLayouter = new FullMax('vertical').content(cmpsAsDict);
+	} else {
+		this._verticalLayouter = new Full('vertical').content(cmpsAsDict);
+	}
 	this._zLayouter = new ZFlat().content(cmpsAsDict);
 }, {
 	width: delegateGetSet('_horizontalLayouter', 'size'),
 	height: delegateGetSet('_verticalLayouter', 'size'),
+	onHeight: function(cb) {
+		this._verticalLayouter.onSize && this._verticalLayouter.onSize(cb)
+	},
 	depth: delegateGetSet('_zLayouter', 'size'),
 	left: delegateGetSet('_horizontalLayouter', 'position'),
 	top: delegateGetSet('_verticalLayouter', 'position'),
