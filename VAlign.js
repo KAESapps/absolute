@@ -31,6 +31,8 @@ module.exports = compose(function(content, vertical) {
 	visible: delegateGetSet('_content', 'visible'),
 	minHeight: delegateGet('_content', 'height'),
 	onMinHeight: function(cb) {
-		this._content.onHeight(cb)
+		if (this._content.onHeight) {
+		 this._content.onHeight(cb)	
+		}
 	},
 });
