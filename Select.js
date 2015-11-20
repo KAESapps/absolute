@@ -27,17 +27,14 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(options) {
 			return this._content.prop('value');
 		}
 	},
-	onInput: function(cb, key) {
+	onInput: function(cb) {
 		var self = this;
 		this._content.on('change', function() {
 			cb(self.value());
 		});
-		this._own(cb, key);
 		return this;
 	},
-	offInput: function(key) {
-		var cb = this._owned[key];
-		this._unown(key);
+	offInput: function(cb) {
 		this._content.off('change', cb);
 		return this;
 	},
