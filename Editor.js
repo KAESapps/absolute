@@ -1,6 +1,7 @@
 var compose = require('ksf/utils/compose');
 var _Destroyable = require('ksf/base/_Destroyable');
 var _ContentDelegate = require('./_ContentDelegate');
+var on = require('ksf/utils/on')
 
 var bindValue = require('ksf/observable/bindValue');
 
@@ -14,7 +15,7 @@ module.exports = compose(_Destroyable, _ContentDelegate, function(args) {
 		}
 	}));
 	// binding montant
-	this._own(args.content.onInput(function(inputValue) {
+	this._own(on(args.content, 'input', function(inputValue) {
 		// réinitialisation de la valeur au cas où le change ne déclencherait pas d'événement
 		args.pessimistic && args.content.value(args.value.value());
 		args.value.change(inputValue);
