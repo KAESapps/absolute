@@ -12,4 +12,7 @@ module.exports = {
 	parentNode: delegateGetSet('_content', 'parentNode'),
 	containerVisible: delegateGetSet('_content', 'containerVisible'),
 	visible: delegateGetSet('_content', 'visible'),
+	onHeight: function (cb) {
+		return this._content.onHeight && this._content.onHeight(cb)
+	},
 };
