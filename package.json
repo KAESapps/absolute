@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "UI components with absolute positioning",
   "dependencies": {
-    "ksf": "kaesapps/ksf#v1.0.1",
-    "lodash": "latest"
+    "ksf": "kaesapps/ksf#3fa6d65600cf3f0e2aae3d854b51d45b32876ce4",
+    "lodash": "3.0.0"
   },
   "devDependencies": {
     "browserify": "latest",
