@@ -27,11 +27,12 @@ module.exports = compose(FocusableElement.prototype, function(args) {
 	},
 	offInput: function(cb) {
 		var inputCb;
+		var inputCbMap = this._inputCbMap
 		// TODO: replace with ES6 Map?
-		this._inputCbMap.some(function(couple, index) {
+		inputCbMap.some(function(couple, index) {
 			if (couple[0] === cb) {
 				inputCb = couple[1];
-				this.splice(index, 1);
+				inputCbMap.splice(index, 1);
 				return true;
 			}
 		});
